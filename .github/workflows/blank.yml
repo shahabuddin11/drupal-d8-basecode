@@ -37,4 +37,3 @@ jobs:
       - name: Run phpcs with Drupal coding standards.
         run: >
           ./vendor/bin/phpcs phpcs.xml.dist
-            
