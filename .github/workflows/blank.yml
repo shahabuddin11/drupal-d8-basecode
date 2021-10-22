@@ -37,4 +37,8 @@ jobs:
       - name: Run phpcs with Drupal coding standards.
         run: >
           ./vendor/bin/phpcs -p -s
-          
+      - name: Set up PHP  Linter ${{ matrix.php_version }}
+        uses: overtrue/phplint@8.0
+        with:
+          path: .
+          options: --exclude=*.log
