@@ -32,7 +32,7 @@ jobs:
           php-version: ${{ matrix.php_version }}
 
       - name: Install dependencies
-        run: composer install --prefer-dist --no-progress
+        run: composer install --require--dev
 
       - name: Run phpcs with Drupal coding standards.
         run: >
