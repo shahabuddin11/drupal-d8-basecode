@@ -31,13 +31,14 @@
     <exclude name="DrupalPractice.InfoFiles.NamespacedDependency"/>
   </rule>
 
-  <file>web/modules/profiles</file>
+  <file>web/profiles</file>
+   <file>web/themes</file>
+    <file>web/modules</file>
   <!-- <file>docroot/profiles/custom</file>
   <file>docroot/themes/custom</file>
-  <file>tests</file>
+  <file>tests</file> -->
   <exclude-pattern>*/behat</exclude-pattern>
   <exclude-pattern>*/node_modules</exclude-pattern>
-  <exclude-pattern>*/vendor</exclude-pattern> -->
+  <exclude-pattern>*/vendor</exclude-pattern>
 
 </ruleset>
-

@@ -36,9 +36,5 @@ jobs:
 
       - name: Run phpcs with Drupal coding standards.
         run: >
-          ./vendor/bin/phpcs \
-            --standard="Drupal,DrupalPractice" -n \
-            --extensions="php,module,inc,install,test,profile,theme" \
-            web/profiles \
-            web/modules
+          ./vendor/bin/phpcs -p -s
           
