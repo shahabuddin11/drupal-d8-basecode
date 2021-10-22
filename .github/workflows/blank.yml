@@ -43,4 +43,4 @@ jobs:
       #     options: --exclude=*.log
       - name: Run phpcs with Drupal linter
         run: >
-          ./vendor/bin/phplint -c .phplint.yml
+          ./vendor/bin/phplint 
