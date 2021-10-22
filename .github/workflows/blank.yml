@@ -33,7 +33,6 @@ jobs:
 
       - name: Install dependencies
         run: composer install --prefer-dist --no-progress
-
       - name: Run phpcs with Drupal coding standards.
         run: >
           ./vendor/bin/phpcs -p -s
