@@ -17,34 +17,40 @@ on:
 jobs:
   # This workflow contains a single job called "build"
   build:
-    name: webUi-${{ matrix.browser }}
+    name: build
     runs-on: ubuntu-latest
-
     strategy:
       matrix:
-        browser: ["chrome", "firefox"]
+        php_version: ['7.4']
 
     steps:
-      - uses: actions/checkout@v2
+      
+      # - name: Check out code
+      #   uses: actions/checkout@v2
 
-      - name: yarn-install
-        run: yarn install
+      # - name: Set up PHP ${{ matrix.php_version }}
+      #   uses: shivammathur/setup-php@v2
+      #   with:
+      #     php-version: ${{ matrix.php_version }}
 
-      # - name: pip-install
-      #   run: pip install -r requirements.txt
-
-      - name: setup-server
-        run: |
-          make migrate
-          make create-admin
-          make serve &
-
-      - name: e2e-test
-        env:
-          BROWSER: ${{ matrix.browser }}
-        run: |
-          yarn test:e2e
-
+      # - name: Install dependencies
+      #   run: composer install --prefer-dist --no-progress
+      # - name: Run phpcs with Drupal coding standards.
+      #   run: >
+      #     ./vendor/bin/phpcs -p -s
+      # - name: Set up PHP  Linter ${{ matrix.php_version }}
+      #   uses: overtrue/phplint@8.0
+      #   with:
+      #     path: .
+      #     options: --exclude=*.log,vendor
+      # - name: Run phpcs with Drupal linter
+      #   run: >
+      #     ./vendor/bin/phplint 
+      - name: Install Node for nightwatch testcase
+        run: npm install && npm install protractor@latest --save-dev
+      - name: Run the test case with the according to the test folder
+        run: >
+             ./node_modules/nightwatch/bin/nightwatch test
   deploy:
     name: Deploy
     runs-on: ubuntu-latest
