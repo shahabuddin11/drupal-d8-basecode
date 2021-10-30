@@ -33,11 +33,24 @@ jobs:
         with:
           php-version: ${{ matrix.php_version }}
 
-      # - name: Install dependencies
-      #   run: composer install --prefer-dist --no-progress
-      # - name: Run phpcs with Drupal coding standards.
-      #   run: >
-      #     ./vendor/bin/phpcs -p -s
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress
+      - name: Run phpcs with Drupal coding standards.
+        run: >
+          ./vendor/bin/phpcs -p -s
+      - name: Build notification
+        if: always()
+        uses: adamkdean/simple-slack-notify@master
+        with:
+          channel: '#builds'
+          status: ${{ job.status }}
+          success_text: 'Build (#${env.GITHUB_RUN_NUMBER}) completed successfully'
+          failure_text: 'Build (#${env.GITHUB_RUN_NUMBER}) failed'
+          cancelled_text: 'Build (#${env.GITHUB_RUN_NUMBER}) was cancelled'
+          fields: |
+            [{ "title": "Action URL", "value": "${env.GITHUB_SERVER_URL}/${env.GITHUB_REPOSITORY}/actions/runs/${env.GITHUB_RUN_ID}"}]
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
       # - name: Set up PHP  Linter ${{ matrix.php_version }}
       #   uses: overtrue/phplint@8.0
       #   with:
@@ -46,11 +59,11 @@ jobs:
       # - name: Run phpcs with Drupal linter
       #   run: >
       #     ./vendor/bin/phplint 
-      - name: Install Node for nightwatch testcase
-        run: npm install && npm install protractor@latest --save-dev
-      - name: Run the test case with the according to the test folder
-        run: >
-             ./node_modules/nightwatch/bin/nightwatch test
+      # - name: Install Node for nightwatch testcase
+      #   run: npm install && npm install protractor@latest --save-dev
+      # - name: Run the test case with the according to the test folder
+      #   run: >
+      #        ./node_modules/nightwatch/bin/nightwatch test
   deploy:
     name: Deploy
     runs-on: ubuntu-latest
