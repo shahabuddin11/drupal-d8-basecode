@@ -30,8 +30,8 @@ jobs:
       - name: yarn-install
         run: yarn install
 
-      - name: pip-install
-        run: pip install -r requirements.txt
+      # - name: pip-install
+      #   run: pip install -r requirements.txt
 
       - name: setup-server
         run: |
