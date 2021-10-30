@@ -16,7 +16,7 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
-  phpcs:
+  build:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -36,11 +36,18 @@ jobs:
       - name: Run phpcs with Drupal coding standards.
         run: >
           ./vendor/bin/phpcs -p -s
-      - name: Set up PHP  Linter ${{ matrix.php_version }}
-        uses: overtrue/phplint@8.0
-        with:
-          path: .
-          options: --exclude=*.log,vendor
-      # - name: Run phpcs with Drupal linter
-      #   run: >
-      #     ./vendor/bin/phplint 
+      # - name: Set up PHP  Linter ${{ matrix.php_version }}
+      #   uses: overtrue/phplint@8.0
+      #   with:
+      #     path: .
+      #     options: --exclude=*.log,vendor
+      - name: Run phpcs with Drupal linter
+        run: >
+          ./vendor/bin/phplint 
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy Application into the env according to the branch 
+      - run: echo "deployment done"
