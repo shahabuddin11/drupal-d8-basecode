@@ -32,11 +32,11 @@ jobs:
         with:
           php-version: ${{ matrix.php_version }}
 
-      - name: Install dependencies
-        run: composer install --prefer-dist --no-progress
-      - name: Run phpcs with Drupal coding standards.
-        run: >
-          ./vendor/bin/phpcs -p -s
+      # - name: Install dependencies
+      #   run: composer install --prefer-dist --no-progress
+      # - name: Run phpcs with Drupal coding standards.
+      #   run: >
+      #     ./vendor/bin/phpcs -p -s
       # - name: Set up PHP  Linter ${{ matrix.php_version }}
       #   uses: overtrue/phplint@8.0
       #   with:
@@ -45,6 +45,8 @@ jobs:
       # - name: Run phpcs with Drupal linter
       #   run: >
       #     ./vendor/bin/phplint 
+      - name: install chrome driver
+        run: apt-get install google-chrome-stable
       - name: Install Node for nightwatch testcase
         run: npm install && npm install protractor@latest --save-dev
       - name: Run the test case with the according to the test folder
