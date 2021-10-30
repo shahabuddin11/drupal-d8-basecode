@@ -46,7 +46,7 @@ jobs:
       #   run: >
       #     ./vendor/bin/phplint 
       - name: Install Node for nightwatch testcase
-        run: npm install && npm install -g webdriver-manager && webdriver-manager update
+        run: npm install 
       - name: Run the test case with the according to the test folder
         run: >
              ./node_modules/nightwatch/bin/nightwatch test

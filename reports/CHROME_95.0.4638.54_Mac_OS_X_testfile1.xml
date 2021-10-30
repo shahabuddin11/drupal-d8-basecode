@@ -5,9 +5,9 @@
 
   <testsuite name="testfile1"
     errors="0" failures="0" hostname="" id="" package="testfile1" skipped="0"
-    tests="2" time="9.189" timestamp="">
+    tests="2" time="9.539" timestamp="">
   
-    <testcase name="Step one: Navigate to google.com and verify URL and title" classname="testfile1" time="4.679" assertions="3">
+    <testcase name="Step one: Navigate to google.com and verify URL and title" classname="testfile1" time="4.852" assertions="3">
 
     
 
@@ -16,7 +16,7 @@
     
     </testcase>
   
-    <testcase name="Step two: Search &#39;Nightwatch&#39; and verify result" classname="testfile1" time="4.510" assertions="1">
+    <testcase name="Step two: Search &#39;Nightwatch&#39; and verify result" classname="testfile1" time="4.687" assertions="1">
 
     
     </testcase>
