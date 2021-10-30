@@ -10,7 +10,7 @@ module.exports = {
     // },
     webdriver: {
       start_process: true,
-      server_path: require("firefoxdriver").path,
+      server_path: require("chromedriver").path,
       port: 9512,
     },
     // firefox: {
@@ -24,7 +24,7 @@ module.exports = {
     test_settings: {
       default: {    
         desiredCapabilities: {
-          browserName: 'firefox'
+          browserName: 'chrome'
         }
       }
     }
