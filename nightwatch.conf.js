@@ -13,6 +13,15 @@ module.exports = {
         server_path: require("chromedriver").path,
         port: 9512,
       },
+      disable_error_log: false,
+      launch_url: 'https://nightwatchjs.org',
+    
+      screenshots: {
+        enabled: false,
+        path: 'screens',
+        on_failure: true
+      },
+    
      
       test_settings: {
         default: {    
