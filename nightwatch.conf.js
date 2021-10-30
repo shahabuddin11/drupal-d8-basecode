@@ -8,11 +8,11 @@ module.exports = {
     //   port: 4444,
     //   host: "localhost"
     // },
-    webdriver: {
-      start_process: true,
-      server_path: require("chromedriver").path,
-      port: 9512,
-    },
+    // webdriver: {
+    //   start_process: true,
+    //   server_path: require("chromedriver").path,
+    //   port: 9512,
+    // },
     // webdriver: {
     //     start_process : true,
     //     server_path: "node_modules/.bin/geckodriver",
