@@ -43,8 +43,10 @@ jobs:
         if: always()
         with:
           status: ${{ job.status }}
-          notification_title: '{workflow} has {status_message}'
-          notify_when: 'success,failure,warnings'
+          if: failure
+          notification_title: '{workflow} has failed due to this {status_message}'
+          notification_title1: '{workflow} has {status_message}'
+          notify_when: 'success,warnings'
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
       # - name: Build notification
