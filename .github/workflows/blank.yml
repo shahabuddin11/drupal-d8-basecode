@@ -45,6 +45,7 @@ jobs:
           status: ${{ job.status }}
           if: failure
           notification_title: '{workflow} has failed due to this {status_message}'
+          else: success 
           notification_title1: '{workflow} has {status_message}'
           notify_when: 'success,warnings'
         env:
