@@ -45,8 +45,6 @@ jobs:
       # - name: Run phpcs with Drupal linter
       #   run: >
       #     ./vendor/bin/phplint 
-      - name: install chrome driver
-        run: apt-get install google-chrome-stable
       - name: Install Node for nightwatch testcase
         run: npm install && npm install protractor@latest --save-dev
       - name: Run the test case with the according to the test folder
