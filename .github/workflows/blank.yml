@@ -48,7 +48,7 @@ jobs:
       - name: Install Node for nightwatch testcase
         run: npm install 
       - name: Run the test case with the according to the test folder
-      - run: >
+        run: >
              ./node_modules/nightwatch/bin/nightwatch test
   deploy:
     name: Deploy
