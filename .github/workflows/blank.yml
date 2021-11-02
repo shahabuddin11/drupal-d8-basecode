@@ -14,7 +14,6 @@ on:
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
-   ACTIONS_ALLOW_UNSECURE_COMMANDS: true
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -30,9 +29,9 @@ jobs:
       
       - name: Check out code
         uses: actions/checkout@v2
-      - name: Get release version
-        id: vars
-        run: echo ::set-env name=tag::$(echo $(echo ${GITHUB_REF#refs/tags/}))
+      # - name: Get release version
+      #   id: vars
+      #   run: echo ::set-env name=tag::$(echo $(echo ${GITHUB_REF#refs/tags/}))
 
       - name: Set up PHP ${{ matrix.php_version }}
         uses: shivammathur/setup-php@v2
@@ -46,7 +45,7 @@ jobs:
           ./vendor/bin/phpcs -p -s
       
       - name: Run when tag is created
-        if: github.ref == '$(echo ${{ env.tag }}'
+        if: github.ref == '${GITHUB_REF#refs/tags/}'
         run: |
           ./vendor/bin/blt artifact:deploy --commit-msg "Creating Automated commit by BLT for Build" --tag $(echo ${GITHUB_REF#refs/tags/}) 
           
