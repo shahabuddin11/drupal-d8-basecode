@@ -63,14 +63,14 @@ jobs:
       - name: Excecute Drush Commands at comDev
         if: github.ref == 'refs/heads/master'
         run : ./vendor/bin/drush @vss2.dev cr -y;  ./vendor/bin/drush @vss2.dev updb -y; ./vendor/bin/drush @vss2.dev cim -y; ./vendor/bin/drush @vss2.dev cr -y;
-      - name: Send GitHub trigger payload to Slack Workflow Builder
-        id: slack
-        uses: slackapi/slack-github-action@v1.15.0
-        if: always()
-        with:
-          payload: "{\"key\":\"value\",\"foo\":\"bar\"}"
-        env: 
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      # - name: Send GitHub trigger payload to Slack Workflow Builder
+      #   id: slack
+      #   uses: slackapi/slack-github-action@v1.15.0
+      #   if: always()
+      #   with:
+      #     payload: "{\"key\":\"value\",\"foo\":\"bar\"}"
+      #   env: 
+      #     SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
        
       # - name: Excecute Drush Commands at comStage
       #   if: github.ref == 'refs/heads/stage'
@@ -88,19 +88,19 @@ jobs:
       #     notify_when: 'success,warnings'
       #   env:
       #     SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-      # - name: Build notification
-      #   if: always()
-      #   uses: adamkdean/simple-slack-notify@master
-      #   with:
-      #     channel: '#builds'
-      #     status: ${{ job.status }}
-      #     success_text: 'Build (#${env.GITHUB_RUN_NUMBER}) completed successfully'
-      #     failure_text: 'Build (#${env.GITHUB_RUN_NUMBER}) failed'
-      #     cancelled_text: 'Build (#${env.GITHUB_RUN_NUMBER}) was cancelled'
-      #     fields: |
-      #       [{ "title": "Action URL", "value": "${env.GITHUB_SERVER_URL}/${env.GITHUB_REPOSITORY}/actions/runs/${env.GITHUB_RUN_ID}"}]
-      #   env:
-      #     SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      - name: Build notification
+        if: always()
+        uses: adamkdean/simple-slack-notify@master
+        with:
+          channel: '#builds'
+          status: ${{ job.status }}
+          success_text: 'Build (#${env.GITHUB_RUN_NUMBER}) completed successfully'
+          failure_text: 'Build (#${env.GITHUB_RUN_NUMBER}) failed'
+          cancelled_text: 'Build (#${env.GITHUB_RUN_NUMBER}) was cancelled'
+          fields: |
+            [{ "title": "Action URL", "value": "${env.GITHUB_SERVER_URL}/${env.GITHUB_REPOSITORY}/actions/runs/${env.GITHUB_RUN_ID}"}]
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
       # - name: Set up PHP  Linter ${{ matrix.php_version }}
       #   uses: overtrue/phplint@8.0
       #   with:
