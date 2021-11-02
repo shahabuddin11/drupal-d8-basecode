@@ -47,8 +47,9 @@ jobs:
       - name: Run when tag is created
         if: ${{ startsWith(github.ref, 'refs/tags/v') }}
         run: |
-          ./vendor/bin/blt artifact:deploy --commit-msg "Creating Automated commit by BLT for Build" --tag $(echo ${GITHUB_REF#refs/tags/}) 
           sleep 30s
+          ./vendor/bin/blt artifact:deploy --commit-msg "Creating Automated commit by BLT for Build" --tag $(echo ${GITHUB_REF#refs/tags/}) 
+          
           
       
       
