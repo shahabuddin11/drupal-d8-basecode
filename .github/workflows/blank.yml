@@ -59,7 +59,7 @@ jobs:
       
            
       - name: Excecute Drush Commands at comDev
-        if: 'refs/heads/master'
+        if: github.ref == 'refs/heads/master'
         run : ./vendor/bin/drush @vss2.dev cr -y;  ./vendor/bin/drush @vss2.dev updb -y; ./vendor/bin/drush @vss2.dev cim -y; ./vendor/bin/drush @vss2.dev cr -y;
        
       # - name: Excecute Drush Commands at comStage
