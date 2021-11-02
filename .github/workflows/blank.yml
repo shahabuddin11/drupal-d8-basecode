@@ -31,7 +31,7 @@ jobs:
         uses: actions/checkout@v2
       - name: Get release version
         id: vars
-        run: echo  name=tag::$(echo $(echo ${GITHUB_REF#refs/tags/}))
+        run: echo ::set-env name=tag::$(echo $(echo ${GITHUB_REF#refs/tags/}))
 
       - name: Set up PHP ${{ matrix.php_version }}
         uses: shivammathur/setup-php@v2
@@ -45,7 +45,7 @@ jobs:
           ./vendor/bin/phpcs -p -s
       
       - name: Run when tag is created
-        if: github.ref == 'refs/tags/$(echo ${GITHUB_REF#refs/tags/})'
+        if: github.ref == 'refs/tags/${{ env.tag }}'
         run: |
           ./vendor/bin/blt artifact:deploy --commit-msg "Creating Automated commit by BLT for Build" --tag $(echo ${GITHUB_REF#refs/tags/}) 
           
