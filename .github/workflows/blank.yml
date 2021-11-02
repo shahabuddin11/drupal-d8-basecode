@@ -8,7 +8,7 @@ on:
   push:
     branches: [ master ]
     tags:        
-      - 'v1.*'             # Push events on tags
+      - '*+.automated'             # Push events on tags
   pull_request:
     branches: [ master ]
 
