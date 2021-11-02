@@ -29,9 +29,9 @@ jobs:
       
       - name: Check out code
         uses: actions/checkout@v2
-      # - name: Get release version
-      #   id: vars
-      #   run: echo ::set-env name=tag::$(echo $(echo ${GITHUB_REF#refs/tags/})
+      - name: Get release version
+        id: vars
+        run: echo ::set-env name=tag::$(echo $(echo ${GITHUB_REF#refs/tags/}))
 
       - name: Set up PHP ${{ matrix.php_version }}
         uses: shivammathur/setup-php@v2
@@ -43,14 +43,9 @@ jobs:
       - name: Run phpcs with Drupal coding standards.
         run: >
           ./vendor/bin/phpcs -p -s
-
-      # - name: Checkout modified files 
-      #   run: git checkout .
-      # - name: Trigger BLT script to deploy to Acquia
-      #   if: $(echo ${GITHUB_REF#refs/heads/}) == dev || $(echo ${GITHUB_REF#refs/heads/}) = stage
-      #   run:  ./vendor/bin/blt artifact:deploy --commit-msg "Automated commit by BLT for Build" --branch $(echo ${GITHUB_REF#refs/heads/})  --ignore-dirty --no-interaction --verbose
-      - name: Checkout modified files
-        if: github.ref == 'refs/tags/$(echo ${GITHUB_REF#refs/tags/})'
+      
+      - name: Run when tag is created
+        if: github.ref == '$(echo ${{ env.tag }}'
         run: |
           ./vendor/bin/blt artifact:deploy --commit-msg "Creating Automated commit by BLT for Build" --tag $(echo ${GITHUB_REF#refs/tags/}) 
           
