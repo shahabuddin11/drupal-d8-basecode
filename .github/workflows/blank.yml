@@ -65,18 +65,18 @@ jobs:
       #   if: github.ref == 'refs/heads/stage'
       #   run : ./vendor/bin/drush @vss2.test cr -y;  ./vendor/bin/drush @vss2.test updb -y; ./vendor/bin/drush @vss2.test cim -y; ./vendor/bin/drush @vss2.test cr -y;
            
-      - name: Deployment Status - Acquia BLT
-        uses: ravsamhq/notify-slack-action@master
-        if: always()
-        with:
-          status: ${{ job.status }}
-          if: ${{ failure() }}
-          notification_title: '{workflow} has failed due to this {status_message}'
-          else: ${{ success() }} 
-          notification_title1: '{workflow} has {status_message}'
-          notify_when: 'success,warnings'
-        env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      # - name: Deployment Status - Acquia BLT
+      #   uses: ravsamhq/notify-slack-action@master
+      #   if: always()
+      #   with:
+      #     status: ${{ job.status }}
+      #     if: ${{ failure() }}
+      #     notification_title: '{workflow} has failed due to this {status_message}'
+      #     else: ${{ success() }} 
+      #     notification_title1: '{workflow} has {status_message}'
+      #     notify_when: 'success,warnings'
+      #   env:
+      #     SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
       # - name: Build notification
       #   if: always()
       #   uses: adamkdean/simple-slack-notify@master
@@ -103,10 +103,10 @@ jobs:
       # - name: Run the test case with the according to the test folder
       #   run: >
       #        ./node_modules/nightwatch/bin/nightwatch test
-  deploy:
-    name: Deploy
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - name: Check out code
-        uses: actions/checkout@v2
+  # deploy:
+  #   name: Deploy
+  #   runs-on: ubuntu-latest
+  #   needs: build
+  #   steps:
+  #     - name: Check out code
+  #       uses: actions/checkout@v2
