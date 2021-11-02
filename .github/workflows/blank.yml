@@ -31,7 +31,7 @@ jobs:
         uses: actions/checkout@v2
       - name: Get release version
         id: vars
-        run: echo ::set-env name=tag::$(echo $(echo ${GITHUB_REF#refs/tags/}))
+        run: echo ::add-path name=tag::$(echo $(echo ${GITHUB_REF#refs/tags/}))
 
       - name: Set up PHP ${{ matrix.php_version }}
         uses: shivammathur/setup-php@v2
