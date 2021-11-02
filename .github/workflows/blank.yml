@@ -47,12 +47,10 @@ jobs:
       #   if: $(echo ${GITHUB_REF#refs/heads/}) == dev || $(echo ${GITHUB_REF#refs/heads/}) = stage
       #   run:  ./vendor/bin/blt artifact:deploy --commit-msg "Automated commit by BLT for Build" --branch $(echo ${GITHUB_REF#refs/heads/})  --ignore-dirty --no-interaction --verbose
       - name: Runs only if Git tag exists
-         if:cgithub.tag != 'v1.*'  
+         if:github.tag == 'v1.*'  
         run: |
-          automated_tag=$(echo "$CI_COMMIT_TAG" | cut -d "." -f2 ) 
-          if [ $automated_tag == 'automated' ]; then sudo acquiacli code:switch prod:ccf prod tags/$tag -y; else echo "Normal Tag"; fi
-          sleep 30
-         
+          ./vendor/bin/blt artifact:deploy --commit-msg "Creating Automated commit by BLT for Build" --tag $(echo ${GITHUB_REF#refs/tags/}) 
+          
       
       
            
