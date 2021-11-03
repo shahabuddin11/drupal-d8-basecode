@@ -46,7 +46,7 @@ jobs:
       - name: Checkout modified files 
         run: git checkout .
       - name: Trigger BLT script to deploy to Acquia
-        if: ${{ startsWith(github.ref, 'refs/heads/dev' ||  'refs/heads/master' ) }}
+        if: ${{ startsWith(github.ref, 'refs/heads/master'  ) }}
         run:  ./vendor/bin/blt artifact:deploy --commit-msg "Automated commit by BLT for Build" --branch $(echo ${GITHUB_REF#refs/heads/})  --ignore-dirty --no-interaction --verbose
       
       - name: Run when tag is created and Deployed code into the Acquia ENV.
