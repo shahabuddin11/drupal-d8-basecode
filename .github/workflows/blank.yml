@@ -115,11 +115,11 @@ jobs:
       # - name: Run phpcs with Drupal linter
       #   run: >
       #     ./vendor/bin/phplint 
-      # - name: Install Node for nightwatch testcase
-      #   run: npm install && npm install protractor@latest --save-dev
-      # - name: Run the test case with the according to the test folder
-      #   run: >
-      #        ./node_modules/nightwatch/bin/nightwatch test
+      - name: Install Node for nightwatch testcase
+        run: npm install 
+      - name: Run the test case with the according to the test folder
+        run: >
+             ./node_modules/nightwatch/bin/nightwatch test
   # deploy:
   #   name: Deploy
   #   runs-on: ubuntu-latest
