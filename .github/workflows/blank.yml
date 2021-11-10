@@ -53,12 +53,12 @@ jobs:
         if: ${{ startsWith(github.ref, 'refs/tags/v') }}
         run: |
           ./vendor/bin/blt artifact:deploy --commit-msg "Creating Automated commit by BLT for Build" --tag $(echo ${GITHUB_REF#refs/tags/})  --ignore-dirty --no-interaction --verbose
-          curl -OL https://github.com/acquia/cli/releases/latest/download/acli.phar
-          chmod +x acli.phar
-          mv acli.phar /usr/local/bin/acli
-          acli login -k ${{secret.API_KEY}} -s ${{secret.API_SECRET}}
-          acli api:environments:code-switch  vss2.prod  "$(echo ${GITHUB_REF#refs/tags/})"
-          sleep 30s
+           curl -OL https://github.com/acquia/cli/releases/latest/download/acli.phar
+           chmod +x acli.phar
+           mv acli.phar /usr/local/bin/acli
+           acli login -k ${{secret.API_KEY}} -s ${{secret.API_SECRET}}
+           acli api:environments:code-switch  vss2.prod  "$(echo ${GITHUB_REF#refs/tags/})"
+           sleep 30s
       - name: Run when tag is created after Deployment run Drush Commands
         if: ${{ startsWith(github.ref, 'refs/tags/v') }}
         run: |
