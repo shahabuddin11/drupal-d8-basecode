@@ -1,2 +1,12 @@
 project:
   machine_name: drupal-d8-basecode
+
+
+openssl req -new -newkey rsa:2048 -nodes \
+  -subj "/C=USA/NJ=USA/L=Florham Park/O=HUTCHMED International Corporation/CN=DriversOfNET.com" \
+  -reqexts SAN \
+  -extensions v3_ca \
+  -config <(cat /etc/ssl/openssl.cnf \
+        <(printf "\n[SAN]\nsubjectAltName=DNS:DriversOfNET.com,DNS:DriversOfNETs.com,DNS:DriverOfNET.com,DNS:DriverOfNETs.com")) \
+  -keyout hutchmed_cert.key \
+  -x509 -days 3650 -extensions SAN -out hutchmed_cert.crt
