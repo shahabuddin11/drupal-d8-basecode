@@ -16,16 +16,14 @@ module.exports = {
       webdriver: {
         start_process: true,
         server_path: require("chromedriver").path,
-        port: 9512,
+        port: 9513,
       },
      
       test_settings: {
         default: {    
           desiredCapabilities: {
             browserName: 'chrome',
-            chromeOptions: {
-              args: ['--headless', '--no-sandbox']
-                }
+            
             }
         }
       }
