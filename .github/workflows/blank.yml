@@ -93,36 +93,33 @@ jobs:
       # - name: Excecute Drush Commands at comStage
       #   if: github.ref == 'refs/heads/stage'
       #   run : ./vendor/bin/drush @vss2.test cr -y;  ./vendor/bin/drush @vss2.test updb -y; ./vendor/bin/drush @vss2.test cim -y; ./vendor/bin/drush @vss2.test cr -y;
-           
-      - name: Deployment Status On Success- Acquia BLT
-        uses: ravsamhq/notify-slack-action@master
-        if: ${{ success() }} 
+      - name:  Deployment Status On Failure - Acquia BLT
+        uses: 8398a7/action-slack@v3
         with:
-          status: ${{ job.status }}
-          notification_title: '{workflow} has {status_message} on {branch}'
-          message_format: '{emoji} *{workflow}* {status_message} in <{repo_url}|{repo}>'
-          footer: 'Linked Repo <{repo_url}|{repo}>'
-          # notify_when: 'failure'
-          # mention_users: 'U0160UUNH8S,U0080UUAA9N'
-          # mention_users_when: 'failure,warnings'
-          # mention_groups: 'SAZ94GDB8'
-          # mention_groups_when: 'failure,warnings'
+            status: ${{ job.status }}
+            fields: repo,message,commit,author,action,eventName,ref,workflow,job,took # selectable (default: repo,message)
         env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-      - name: Deployment Status On Failure - Acquia BLT
-        uses: ravsamhq/notify-slack-action@master
-        if: ${{ failure() }} 
-        with:
-          status: ${{ job.status }}
-          notification_title: '{workflow} has {status_message} on {branch}'
-          message_format: '{emoji} *{workflow}* {status_message} in <{repo_url}|{repo}>'
-          footer: 'Linked Repo <{repo_url}|{repo}>'
-          mention_users: 'U0160UUNH8S,U0080UUAA9N'
-          mention_users_when: 'failure,warnings'
-          mention_groups: 'SAZ94GDB8'
-        env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-      # - name: Build notification
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }} # required
+        if: always() # Pick up events even if the job fails or is canceled.     
+      # - name: Deployment Status On Success- Acquia BLT
+      #   uses: ravsamhq/notify-slack-action@master
+      #   if: ${{ success() }} 
+      #   with:
+      #     status: ${{ job.status }}
+      #     notification_title: '{workflow} has {status_message} on {branch}'
+      #     message_format: '{emoji} *{workflow}* {status_message} in <{repo_url}|{repo}>'
+      #     footer: 'Linked Repo <{repo_url}|{repo}>'
+      # - name: Deployment Status On Failure - Acquia BLT
+      #   uses: ravsamhq/notify-slack-action@master
+      #   if: ${{ failure() }} 
+      #   with:
+      #     status: ${{ job.status }}
+      #     notification_title: '{workflow} has {status_message} on {branch}'
+      #     message_format: '{emoji} *{workflow}* {status_message} in <{repo_url}|{repo}>'
+      #     footer: 'Linked Repo <{repo_url}|{repo}>'
+      #   env:
+      #     SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      # # - name: Build notification
       #   if: always()
       #   uses: adamkdean/simple-slack-notify@master
       #   with:
