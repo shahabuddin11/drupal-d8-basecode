@@ -96,12 +96,17 @@ jobs:
            
       - name: Deployment Status - Acquia BLT
         uses: ravsamhq/notify-slack-action@master
-        if: ${{ success() }} 
+        if: ${{ always() }} 
         with:
           status: ${{ job.status }}
           notification_title: '{workflow} has {status_message} on {branch}'
           message_format: '{emoji} *{workflow}* {status_message} in <{repo_url}|{repo}>'
           footer: 'Linked Repo <{repo_url}|{repo}>'
+          notify_when: 'failure'
+          mention_users: 'U0160UUNH8S,U0080UUAA9N'
+          mention_users_when: 'failure,warnings'
+          mention_groups: 'SAZ94GDB8'
+          mention_groups_when: 'failure,warnings'
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
       # - name: Build notification
