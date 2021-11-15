@@ -62,7 +62,7 @@ jobs:
            acli login 
            acli api:environments:code-switch  vss2.prod  "$(echo ${GITHUB_REF#refs/tags/})"
            sleep 30s
-      - name: Run when tag is created after Deployment run Drush Commands
+      - name: Run when tag is created after Deployment and run Drush Commands
         if: ${{ startsWith(github.ref, 'refs/tags/tags') }}
         run: |
           ./vendor/bin/drush @vss2.dev cr -y;  ./vendor/bin/drush @vss2.dev updb -y; ./vendor/bin/drush @vss2.dev cim -y; ./vendor/bin/drush @vss2.dev cr -y;
