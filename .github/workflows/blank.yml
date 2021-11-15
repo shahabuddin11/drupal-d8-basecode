@@ -99,7 +99,7 @@ jobs:
         if: ${{ success() }} 
         with:
           status: ${{ job.status }}
-          notification_title: '{workflow} has paased  to this {status_message}'
+          notification_title: '{workflow} Application is deployed into the $(echo ${GITHUB_REF#refs/heads/}) '
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
       # - name: Build notification
