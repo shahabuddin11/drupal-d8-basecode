@@ -76,6 +76,15 @@ jobs:
       - name: Excecute Drush Commands at comDev
         if: github.ref == 'refs/heads/master'
         run : ./vendor/bin/drush @vss2.dev cr -y;  ./vendor/bin/drush @vss2.dev updb -y; ./vendor/bin/drush @vss2.dev cim -y; ./vendor/bin/drush @vss2.dev cr -y;
+      - name: Use Node.js for running nightwatch test cases ${{ matrix.node-version }}
+        if: ${{ startsWith(github.ref, 'refs/heads/dev'  ) }} || ${{ startsWith(github.ref, 'refs/heads/stage'  ) }} || ${{ startsWith(github.ref, 'refs/heads/v'  ) }} || ${{ startsWith(github.ref, 'refs/heads/master'  ) }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Install dependency and Run tests
+        run: |
+          npm install
+          ./node_modules/nightwatch/bin/nightwatch test
       # - name: Send GitHub trigger payload to Slack Workflow Builder
       #   id: slack
       #   uses: slackapi/slack-github-action@v1.15.0
