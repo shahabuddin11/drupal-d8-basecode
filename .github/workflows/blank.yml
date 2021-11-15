@@ -8,7 +8,7 @@ on:
   push:
     branches: [ master, dev,stage ]
     tags:        
-      - 'v*'             # Push events on tags
+      - 'tags*'             # Push events on tags
   pull_request:
     branches: [ master, dev,stage ]
 
