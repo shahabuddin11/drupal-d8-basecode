@@ -6,11 +6,11 @@ name: CI
 on:
   # Triggers the workflow on push or pull request events but only for the master branch
   push:
-    branches: [ master, dev ]
+    branches: [ master, dev,stage ]
     tags:        
       - 'v*'             # Push events on tags
   pull_request:
-    branches: [ master, dev ]
+    branches: [ master, dev,stage ]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -24,6 +24,7 @@ jobs:
     strategy:
       matrix:
         php_version: ['7.4']
+        node-version: [15.x]
 
     steps:
       
@@ -43,12 +44,11 @@ jobs:
       - name: Run phpcs with Drupal coding standards.
         run: >
           ./vendor/bin/phpcs -p -s
-      - name: Checkout modified files 
-        run: git checkout .
-      - name: Run night watch test cases
-        run: |
-         npm install 
-         ./node_modules/nightwatch/bin/nightwatch test
+      # - name: Checkout modified files 
+      #   run: git checkout .
+      # - uses: actions/checkout@v2
+      #   with:
+      #    ref: workaround
       - name: Trigger BLT script to deploy to Acquia
         if: ${{ startsWith(github.ref, 'refs/heads/dev'  ) }}
         run:  ./vendor/bin/blt artifact:deploy --commit-msg "Automated commit by BLT for Build" --branch $(echo ${GITHUB_REF#refs/heads/})  --ignore-dirty --no-interaction --verbose
@@ -71,6 +71,16 @@ jobs:
       - name: Excecute Drush Commands at comDev
         if: github.ref == 'refs/heads/dev'
         run : ./vendor/bin/drush @vss2.dev cr -y;  ./vendor/bin/drush @vss2.dev updb -y; ./vendor/bin/drush @vss2.dev cim -y; ./vendor/bin/drush @vss2.dev cr -y;
+
+      - name: Use Node.js for running nightwatch test cases ${{ matrix.node-version }}
+        if: ${{ startsWith(github.ref, 'refs/heads/dev'  ) }} || ${{ startsWith(github.ref, 'refs/heads/stage'  ) }} || ${{ startsWith(github.ref, 'refs/heads/v'  ) }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Install dependency and Run tests
+        run: |
+          npm install
+          ./node_modules/nightwatch/bin/nightwatch test
       # - name: Send GitHub trigger payload to Slack Workflow Builder
       #   id: slack
       #   uses: slackapi/slack-github-action@v1.15.0
